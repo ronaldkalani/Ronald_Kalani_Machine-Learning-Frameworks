@@ -1,45 +1,91 @@
 # Ronald_Kalani_Machine-Learning-Frameworks
-Model Deployment and Interaction
-1. Train and Save the KNN Model
-Step 1.1: Import libraries and load the dataset.
-Step 1.2: Perform data preprocessing:
-Handle missing values.
-Encode categorical variables using OneHotEncoder or other relevant techniques.
-Step 1.3: Split the data into training and testing sets using train_test_split.
-Step 1.4: Create a pipeline with preprocessing steps and the KNeighborsRegressor.
-Step 1.5: Train the model using the training dataset.
-Step 1.6: Save the trained model to a file using pickle:
-with open('knn_sales_model.pkl', 'wb') as model_file:
-    pickle.dump(knn_model, model_file)
-2. Flask API Development
-Step 2.1: Install Flask if not already installed:
-pip install flask
-Step 2.2: Create a Flask application (app.py) with the following steps:
-Import necessary libraries (Flask, request, pickle, etc.).
-Load the saved knn_sales_model.pkl using pickle.
-Define a /predict endpoint to accept POST requests with JSON payloads.
-3. Test the Flask API
-Step 3.1: Navigate to the directory containing app.py
-cd C:\Users\karon\Flask
-Step 3.2: Start the Flask application:
-python app.py
-Output:
-Running on http://127.0.0.1:5000
-Step 3.3: Use tools like Postman, curl, or PowerShell to send a POST request to the /predict endpoint. Example using PowerShell:
-Invoke-RestMethod -Uri http://127.0.0.1:5000/predict -Method POST -Body (@{'features' = @(3, 70.0, 3.2, 2000.0, 1500.0, 800.0, 3000.0, 500.0, 250.0, 5.0, 1)} | ConvertTo-Json) -ContentType "application/json"
-4. Interaction Diagram
-Client: Sends a POST request to the Flask API with features in JSON format.
-Flask API:
-Receives and parses the request.
-Passes the parsed features to the KNN model for prediction.
-Sends the predicted value back as a JSON response.
-Server: Handles API requests and serves the model.
-5. Result 
+Sales Prediction API
+A Flask-based REST API for predicting sales using a trained KNN regression model. This API accepts input features and returns the predicted sales value.
+
+Table of Contents
+Overview
+Features
+Project Structure
+Setup Instructions
+Usage
+API Endpoints
+Example Request and Response
+Contributing
+License
+
+Overview
+This project deploys a K-Nearest Neighbors (KNN) regression model using Flask to predict sales. The API processes input features such as store information, temperature, and economic indicators to generate a prediction for sales.
+
+The trained KNN model is serialized using pickle and served via a Flask application.
+
+Features
+RESTful API for predicting sales.
+Handles JSON-based requests.
+Pre-trained KNN model for regression tasks.
+Flask development environment for local testing.
+
+Project Structure
+.
+├── app.py                   # Flask application code
+├── knn_sales_model.pkl      # Pre-trained KNN model file
+├── requirements.txt         # Python dependencies
+└── README.md                # Project documentation
+
+
+Setup Instructions
+Prerequisites
+Python 3.7 or later
+Flask framework
+Libraries such as NumPy, pandas, scikit-learn, and pickle
+Steps
+1. Clone the Repository
+
+git clone https://github.com/username/sales-prediction-api.git
+cd sales-prediction-api
+
+2. Set Up a Virtual Environment
+python -m venv venv
+source venv/bin/activate    # On Windows: venv\Scripts\activate
+
+3. Install Dependencies
+   pip install -r requirements.txt
+   
+5. Run the Flask Application
+
+   python app.py
+The application will run on http://127.0.0.1:5000.
+
+Usage
+1. Start the Flask Server
+
+   python app.py
+2. Send a POST Request
+Use tools like Postman, curl, or a script to interact with the API.
+API Endpoints
+POST /predict
+Description
+Predict sales based on input features.
+
 Request
+Content-Type: application/json
+Body:
 {
-  "features": [3, 70.0, 3.2, 2000.0, 1500.0, 800.0, 3000.0, 500.0, 250.0, 5.0, 1]
+  "features": [Store, Temperature, Fuel_Price, MarkDown1, MarkDown2, MarkDown3, MarkDown4, MarkDown5, CPI, Unemployment, IsHoliday]
 }
+
 Response
+Content-Type: application/json
+Body:
 {
   "predicted_sales": 27735.60224423001
 }
+
+
+License
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+Contact
+For issues or inquiries, please contact:
+
+Name: Ronald Kalani
+Email: RONALDKALANI@YAHOO.CA
